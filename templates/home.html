@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="d-flex flex-wrap mt-5 mb-5 align-items-center">
+
+<div class=" col-6 p-5  ">
+  <h1 class='mb-2'>Welcome To CarMart</h1>
+  <p>A blog, short for weblog, is a frequently updated web page used for personal commentary or business content. Blogs are often interactive and include sections at the bottom of individual blog posts where readers can leave comments.
+    A blog, short for weblog, is a frequently updated web page used for personal commentary or business content. Blogs are often interactive and include sections at the bottom of individual blog posts where readers can leave comments
+  </p>
+  <a class="btn btn-outline-danger " href="">Learn More</a>
+</div>
+
+<div class=" col-6">
+  <img src="{% static "header.png" %}" alt="" style='width: 650px;'>
+</div>
+
+</div>
+
+<hr class='mb-5'>
+
+
+
+<div class="d-flex flex-warp p-4">
+
+
+  <div class="col-2 bg-white p-3 rounded-2">
+
+    <h5 class="text-center mb-3"> All Brands</h5>
+    <hr>
+   {% for cat in brand %}
+   
+   <div class="form-check ">
+  <input class="form-check-input bg-secondary" type="radio" name='category' id={{cat.id}}>
+  <label class="form-check-label" for={{cat.id}}>
+    
+    <a href="{% url "brand_wise_post" cat.slug %}" class="text-decoration-none text-dark "> {{cat.name}}</a>
+  </label>
+</div>
+
+   {% endfor %}
+
+</div>
+
+
+
+<div class="col-10">
+  <h3 class="text-center">{{ data | length }} result found</h3>
+    
+<div class="d-flex flex-wrap justify-content-center px-5 pt-5 ">
+  {% for post in data %}
+
+  <div class="w-50" >
+    <div class="card m-3"  >
+      <div class="card-body text-center">
+        <img src="{{post.image.url}}" class="card-img-top" alt="...">
+        <h4 class="card-title"> <a href=" {% url "details_car" post.id %} " class='text-decoration-none text-dark'>{{post.name}}</a></h4>
+        <p class="card-text"> {{post.discription}} </p>
+        <p>Quantity: {{ post.quantity}} </p>
+        <p>Price: {{ post.price}} </p>
+        <p>Brand: {{ post.brand.name}} </p>
+        {% if request.user.is_authenticated %}
+            <a class="btn btn-outline-warning " href=" {% url "buy_car" post.id %} ">Buy Now</a>
+            {% endif %}
+        
+
+
+        
+      </div>
+    </div>
+  </div>
+
+    {% endfor %}
+
+  </div>
+  </div>
+
+{% endblock content %}
+</div>
